@@ -10,6 +10,9 @@ var lapAPIRoutes = require('./server/routes/lap_api');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
+
+require('dotenv').config();
+
 var app = express();
 
 

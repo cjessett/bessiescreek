@@ -1,4 +1,4 @@
-var Db = require('./db');
+var db = require('./db');
 var TeamDb = function () { };
 
 TeamDb.prototype.getTeams = function (req,res) {
@@ -16,19 +16,10 @@ TeamDb.prototype.getTeams = function (req,res) {
 
 TeamDb.prototype.getTeamsByRace = function (req,res) {
    
-    var params = [];
-    var query = 'SELECT id,description,name,gender,race_id from vwTeams where race_id = ? order by name';
-
-    var data = '[';
-    var i = 0;
-    Db.db.serialize(function () {
-        params.push(req.params.id);
-        Db.db.each(query,params, function (err, row) {
-            if (err) console.log(err);
-            if (i > 0) { data = data + ","; } 
-            i++;
-            data = data + '{"id": ' + row.id + ',"description":"' + row.description + '","name":"' + row.name + '","gender":"' + row.gender + '","race_id":' + row.race_id + '}';
-        }, function (err, rows) { data = data + ']'; res.send(data); });
+    const text = 'SELECT id,description,name,gender,race_id from vwTeams where race_id = $1 order by name';
+    db.query(text, [req.params.id], (err, result) => {
+      if (err) console.log(err);
+      res.send(result.rows)
     });
 }
 

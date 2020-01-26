@@ -25,7 +25,7 @@
         function isGuest()
         {
             if(vm.user)
-                return vm.user.userName.toLowerCase()=='guest';
+                return vm.user.username.toLowerCase()=='guest';
             else
                 return true;
         }
