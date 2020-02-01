@@ -3,13 +3,11 @@ var raceDb = new RaceDb();
 
 "use strict";
 function api_races_get(req, res) {
-    console.log('Getting all races');
     raceDb.getRaces(req, res);
 }
 exports.api_races_get = api_races_get;
 
 function api_races_add(req, res) {
- console.log('Adding a race');
     raceDb.addRace(req, res);
 }
 exports.api_races_add = api_races_add;

@@ -24,7 +24,7 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href=""><b>{{vm.user.firstName}}</b></a></li>
+        <li><a href=""><b>{{vm.user.firstname}}</b></a></li>
         <li><a href="#!/login">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -50,8 +50,8 @@
 			<tr ng-repeat="row in displayedCollection">
         <td><input type="text" ng-model="row.description"/></td>
         <td><input type="text" ng-model="row.scheduled_date"/></td>
-        <td>{{row.start_time}}</td>
-        <td>{{row.end_time}}</td>
+        <td>{{row.start_time | date:'short' }}</td>
+        <td>{{row.end_time | date:'short' }}</td>
         <td>
 				<button type="button" ng-click="vm.UpdateRace(row)" class="btn btn-sm btn-success">
 					<i class="glyphicon glyphicon-floppy-disk">

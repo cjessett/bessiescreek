@@ -1,5 +1,11 @@
 ﻿"use strict";
+var http = require('http');
+var path = require('path');
+var bodyParser = require('body-parser');
+var winston = require('winston');
+var expressWinston = require('express-winston');
 var express = require('express');
+
 var formatAPIRoutes = require('./server/routes/format_api');
 var participantAPIRoutes = require('./server/routes/participant_api');
 var raceAPIRoutes = require('./server/routes/race_api');
@@ -7,15 +13,25 @@ var userAPIRoutes = require('./server/routes/user_api');
 var teamAPIRoutes = require('./server/routes/team_api');
 var lapAPIRoutes = require('./server/routes/lap_api');
 
-var http = require('http');
-var path = require('path');
-var bodyParser = require('body-parser');
-
 require('dotenv').config();
 
 var app = express();
 
-
+// logger
+app.use(expressWinston.logger({
+  transports: [new winston.transports.Console(
+    {
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      ),
+    }
+  )],
+  meta: false,
+  msg: "HTTP {{req.method}} {{req.url}}", 
+  expressFormat: true,
+  colorize: true,
+}));
 
 // all environments
 app.set('port', process.env.PORT || 8000);

@@ -4,10 +4,38 @@ CREATE TABLE teams(id integer primary key,race_id integer not null,name text not
 CREATE TABLE formats(id integer primary key,description text not null);
 CREATE TABLE laps(id integer primary key, lap_number integer default 1 not null, race_participant_id integer not null, start_time timestamp,end_time timestamp, miles text default 21.3);
 CREATE TABLE team_members(id integer primary key,team_id integer not null,participant_id integer not null);
-CREATE TABLE Users(id integer primary key,firstName text not null,lastName text not null,username text not null, password text not null,createdOn timestamp);
+CREATE TABLE users(id integer primary key,firstName text not null,lastName text not null,username text not null, password text not null,createdOn timestamp);
 CREATE TABLE race_participants(id integer primary key,race_id integer not null,participant_id integer,team_id integer,current_lap integer not null default 1,tag integer not null default 1, bike_type text);
 CREATE TABLE age_groups (id integer primary key,description text not null);
 CREATE TABLE genders (gender text not null,description text not null);
+
+/* sequence IDs */
+CREATE SEQUENCE participant_id_seq MINVALUE 47;
+ALTER TABLE participants ALTER id SET DEFAULT nextval('participant_id_seq');
+
+CREATE SEQUENCE race_id_seq MINVALUE 5;
+ALTER TABLE races ALTER id SET DEFAULT nextval('race_id_seq');
+
+CREATE SEQUENCE team_id_seq MINVALUE 1;
+ALTER TABLE teams ALTER id SET DEFAULT nextval('team_id_seq');
+
+CREATE SEQUENCE format_id_seq MINVALUE 4;
+ALTER TABLE formats ALTER id SET DEFAULT nextval('format_id_seq');
+
+CREATE SEQUENCE lap_id_seq MINVALUE 1;
+ALTER TABLE laps ALTER id SET DEFAULT nextval('lap_id_seq');
+
+CREATE SEQUENCE team_member_id_seq MINVALUE 1;
+ALTER TABLE team_members ALTER id SET DEFAULT nextval('team_member_id_seq');
+
+CREATE SEQUENCE user_id_seq MINVALUE 5;
+ALTER TABLE users ALTER id SET DEFAULT nextval('user_id_seq');
+
+CREATE SEQUENCE race_participant_id_seq MINVALUE 31;
+ALTER TABLE race_participants ALTER id SET DEFAULT nextval('race_participant_id_seq');
+
+CREATE SEQUENCE age_group_id_seq MINVALUE 15;
+ALTER TABLE age_groups ALTER id SET DEFAULT nextval('age_group_id_seq');
 
 CREATE VIEW vwTeamMembers as select tm.id,tm.participant_id,tm.team_id,t.name TeamName,p.name ParticipantName,t.gender
 from team_members tm inner join teams t on tm.team_id = t.id
@@ -22,7 +50,7 @@ rp.current_lap,rp.tag,l.start_time,l.end_time,
 CAST(extract(day from (select l.end_time - l.start_time)) AS TEXT) || 'd:' ||
 CAST(extract(hour from (select l.end_time - l.start_time)) AS TEXT) || 'h:' ||
 CAST(extract(minute from (select l.end_time - l.start_time)) AS TEXT) || 'm:' ||
-CAST(extract(second from (select l.end_time - l.start_time)) AS TEXT) || 's'
+CAST(extract(second from (select date_trunc('second', end_time) - date_trunc('second', start_time))) AS TEXT) || 's'
 total_time,t.id team_id,p.id participant_id
 , g.description || ' ' || coalesce(rp.bike_type,p.bike_type) gender_bike_type
 
