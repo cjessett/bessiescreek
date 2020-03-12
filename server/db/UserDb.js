@@ -19,7 +19,7 @@ UserDb.prototype.authenticate = async function(req, res) {
   
   try {
     const { rows } = await db.query(text, params);
-    if (rows[0].id) {
+    if (rows[0]) {
       res.send({ success: true });
     } else {
       res.send({ success: false, message: "Username or password is incorrect" });
