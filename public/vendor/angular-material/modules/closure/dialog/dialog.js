@@ -316,14 +316,14 @@ function MdDialogDirective($$rAF, $mdTheming, $mdDialog) {
  *     $scope.showGreeting = showCustomGreeting;
  *
  *     $scope.hasAlert = function() { return !!alert };
- *     $scope.userName = $scope.userName || 'Bobby';
+ *     $scope.username = $scope.username || 'Bobby';
  *
  *     // Dialog #1 - Show simple alert dialog and cache
  *     // reference to dialog instance
  *
  *     function showAlert() {
  *       alert = $mdDialog.alert()
- *         .title('Attention, ' + $scope.userName)
+ *         .title('Attention, ' + $scope.username)
  *         .textContent('This is an example of how easy dialogs can be!')
  *         .ok('Close');
  *
@@ -361,7 +361,7 @@ function MdDialogDirective($$rAF, $mdTheming, $mdDialog) {
  *             '</md-dialog>',
  *           controller: 'GreetingController',
  *           onComplete: afterShowAnimation,
- *           locals: { employee: $scope.userName }
+ *           locals: { employee: $scope.username }
  *         });
  *
  *         // When the 'enter' animation finishes...

@@ -13,17 +13,17 @@
 
         function register() {
             vm.dataLoading = true;
-            FlashService.Error('Please contact admin if you need an accout.');
-            // UserService.Create(vm.user)
-            //     .then(function (response) {
-            //         if (response.success) {
-            //             FlashService.Success('Registration successful', true);
-            //             $location.path('/login');
-            //         } else {
-            //             FlashService.Error(response.message);
-            //             vm.dataLoading = false;
-            //         }
-            //     });
+            // FlashService.Error('Please contact admin if you need an accout.');
+            UserService.Create(vm.user)
+                .then(function (response) {
+                    if (response.success) {
+                        FlashService.Success('Registration successful', true);
+                        $location.path('/login');
+                    } else {
+                        FlashService.Error(response.message);
+                        vm.dataLoading = false;
+                    }
+                });
         }
     }
 
